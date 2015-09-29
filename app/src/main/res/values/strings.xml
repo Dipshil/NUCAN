@@ -2,9 +2,10 @@
     <string name="app_name">NUCAN</string>
 
     <string name="home">Home</string>
-    <string name="title_section1">CSI</string>
-    <string name="title_section2">ISTE</string>
-    <string name="title_section3">Rotract</string>
+    <string name="title_section1">Home</string>
+    <string name="title_section2">CSI</string>
+    <string name="title_section3">ISTE</string>
+    <string name="title_section4">Rotract</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
