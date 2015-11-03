@@ -3,6 +3,7 @@ package com.example.dipshil.nucan;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.RequestQueue;
+
+import static com.example.dipshil.nucan.R.id.bottom_list_fragment;
+import static com.example.dipshil.nucan.R.id.main_news_fragment;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -21,7 +27,8 @@ public class MainActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
+    static String url="http://nucan.comxa.com/HOME.php";
+    static String turl="http://nucan.comxa.com/TOPHOME.php";
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -44,8 +51,30 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
+
+        switch (position) {
+            case 0:
+                url="http://nucan.comxa.com/HOME.php";
+                turl="http://nucan.comxa.com/TOPHOME.php";
+                break;
+            case 1:
+                url="http://nucan.comxa.com/CSI.php";
+                turl="http://nucan.comxa.com/TOPCSI.php";
+                break;
+            case 2:
+                url="http://nucan.comxa.com/ISTE.php";
+                turl="http://nucan.comxa.com/TOPISTE.php";
+                break;
+            case 3:
+                url="http://nucan.comxa.com/RCNI.php";
+                turl="http://nucan.comxa.com/TOPRCNI.php";
+                break;
+        }
         FragmentManager fragmentManager = getSupportFragmentManager();
+        bottomlist b = (bottomlist)fragmentManager.findFragmentById(R.id.bottom_list_fragment);
+        b.volleyconnect(url);
+        MainNewsFragment m = (MainNewsFragment) fragmentManager.findFragmentById(R.id.main_news_fragment);
+        m.volleyconnect(turl);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
@@ -58,6 +87,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
+
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
@@ -96,6 +126,8 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -128,6 +160,9 @@ public class MainActivity extends ActionBarActivity
             fragment.setArguments(args);
             return fragment;
         }
+       /* public static String seturl(){
+            return url;
+        }*/
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
