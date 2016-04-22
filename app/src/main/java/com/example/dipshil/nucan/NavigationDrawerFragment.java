@@ -1,5 +1,7 @@
 package com.example.dipshil.nucan;
 
+
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -53,6 +56,7 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
+
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -250,7 +254,14 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "vola!", Toast.LENGTH_SHORT).show();
+
+            String url=MainActivity.url;
+            String turl=MainActivity.turl;
+            FragmentManager fragmentManager = getFragmentManager();
+            bottomlist b = (bottomlist)fragmentManager.findFragmentById(R.id.bottom_list_fragment);
+            b.volleyconnect(url);
+            MainNewsFragment m = (MainNewsFragment) fragmentManager.findFragmentById(R.id.main_news_fragment);
+            m.volleyconnect(turl);
             return true;
         }
 
@@ -271,6 +282,8 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
+
+
 
     /**
      * Callbacks interface that all activities using this fragment must implement.

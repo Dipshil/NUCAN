@@ -33,6 +33,8 @@ public class Content_adapter extends ArrayAdapter {
 
     LayoutInflater myinflater;
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if(myinflater==null) {
@@ -49,15 +51,10 @@ public class Content_adapter extends ArrayAdapter {
                 TextView news = (TextView) convertView.findViewById(R.id.newshead);
                 TextView date = (TextView) convertView.findViewById(R.id.date);
                 Item item = items.get(position);
-/*                byte[] byteArray=item.getImage();
-                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                imageView.setImageBitmap(bmp);
-                //imageView.setImageUrl(item.getImage(),imageloader);*/
+
+                imageView.setImageUrl(item.getImage(),imageloader);
                 news.setText(item.getNews());
                 date.setText(item.getdate());
-                /*convertView = myinflater.inflate(R.layout.main_news_fragment,null);
-                TextView main_news=(TextView) convertView.findViewById(R.id.tnews);
-                main_news.setText(item.getNews());*/
 
 
         return convertView;

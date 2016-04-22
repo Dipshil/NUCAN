@@ -13,5 +13,6 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
-    <string name="topnews">Large Text</string>
+    <string name="topnews"></string>
+    <string name="refresh">Refresh</string>
 </resources>

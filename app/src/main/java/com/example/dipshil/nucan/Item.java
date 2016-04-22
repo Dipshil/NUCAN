@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Item {
         public String news;
-        public byte[] image;
+        public String image;
         public String date;
 
     public String getdate() {
@@ -16,11 +16,11 @@ public class Item {
     public String getNews() {
         return news;
     }
-    public byte[] getImage(){
+    public String getImage(){
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

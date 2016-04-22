@@ -16,7 +16,9 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +28,9 @@ public class MainNewsFragment extends Fragment {
 
     private RequestQueue mQueue;
     private static TextView main_news;
-    private static ImageView main_news_image;
+    private static TextView desc;
+    private static NetworkImageView main_news_image;
+    private static ImageLoader imageloader;
     String url;
     private ListView l1;
     public void volleyconnect(String url){
@@ -54,6 +58,9 @@ public class MainNewsFragment extends Fragment {
                             jresponse = response.getJSONObject(0);
 
                             main_news.setText(jresponse.getString("text"));
+                            desc.setText(jresponse.getString("description"));
+                            String iurl="http://nucan.comxa.com/";
+                            main_news_image.setImageUrl(iurl + jresponse.getString("image"), imageloader);
                                 /*byte[] imageBytes = Base64.decode(jresponse.getString("image"), Base64.DEFAULT);
                                 item.setImage(imageBytes);*/
                             //dialog.dismiss();
@@ -63,7 +70,7 @@ public class MainNewsFragment extends Fragment {
                         }
 
 
-                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                     }
 
                 },
@@ -87,7 +94,9 @@ public class MainNewsFragment extends Fragment {
         View view = inflater.inflate(R.layout.main_news_fragment, container, false);
         mQueue = CustomVolleyRequestQueue.getInstance(getActivity()).getRequestQueue();
         main_news=(TextView) view.findViewById(R.id.tnews);
-        main_news_image=(ImageView) view.findViewById(R.id.topimage);
+        imageloader=CustomVolleyRequestQueue.getInstance(getActivity()).getImageLoader();
+        main_news_image=(NetworkImageView) view.findViewById(R.id.topimage);
+        desc=(TextView)view.findViewById(R.id.description);
         url = MainActivity.url;
         volleyconnect(url);
         return view;
