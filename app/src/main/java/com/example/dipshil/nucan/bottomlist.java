@@ -9,6 +9,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -41,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -63,6 +68,7 @@ public class bottomlist extends ListFragment {
     AlarmManager alarmManager;
     //AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
     private PendingIntent pendingIntent;
+    private MediaPlayer player;
 
 
     @Override
@@ -98,7 +104,8 @@ public class bottomlist extends ListFragment {
                         builder.setTitle("Event Details").setCancelable(true).setNegativeButton("Cancel",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        alarmManager.cancel(pendingIntent);
+                                        if(player.isPlaying()){
+                                        player.stop();}
                                         dialog.cancel();
 
 
@@ -109,7 +116,22 @@ public class bottomlist extends ListFragment {
 
                                             calendar.set(Calendar.HOUR_OF_DAY,9);
                                             calendar.set(Calendar.MINUTE,0);
-                                            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                                player = new MediaPlayer();
+                                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+                                try {
+                                    player.setDataSource(getActivity(), uri);
+                                    final AudioManager audio = (AudioManager) getActivity()
+                                            .getSystemService(Context.AUDIO_SERVICE);
+                                    if (audio.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+                                        player.setAudioStreamType(AudioManager.STREAM_ALARM);
+                                        player.prepare();
+                                        player.start();
+                                    }
+                                } catch (IOException e) {
+                                    Log.e("Error....","Check code...");
+                                }
+
+                                           // alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                                 dialog.dismiss();
                             }
                         });
